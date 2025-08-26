@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>To-Do</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+      .card { border: 1px solid #ddd; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+      .muted { color: #666; font-size: 0.9rem; }
+      .done { text-decoration: line-through; opacity: 0.7; }
+    </style>
+  </head>
+  <body>
+    <h1>My Tasks</h1>
+
+    {% if tasks %}
+      {% for task in tasks %}
+        <div class="card">
+          <div class="{% if task.completed %}done{% endif %}">
+            {{ task.title }}
+          </div>
+          <div class="muted">
+            created: {{ task.created_at|date:"M d, Y H:i" }} •
+            status: {{ task.completed|yesno:"Done,Pending" }}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No tasks yet. Add a few from the admin: <code>/admin</code></p>
+    {% endif %}
+  </body>
+</html>

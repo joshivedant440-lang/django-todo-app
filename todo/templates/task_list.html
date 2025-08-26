@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do</title>
+</head>
+<body>
+    <h1>My Tasks</h1>
+
+    <!-- Add Task Form -->
+    <form method="POST" action="{% url 'add_task' %}">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="New task..." required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <br>
+
+    <!-- List Tasks -->
+    {% for task in tasks %}
+        <div style="border:1px solid #ddd; padding:10px; margin:5px; border-radius:10px;">
+            <strong>{{ task.title }}</strong><br>
+            created: {{ task.created|date:"M d, Y H:i" }} • status: {{ task.status }}
+            <form method="POST" action="{% url 'delete_task' task.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No tasks yet.</p>
+    {% endfor %}
+</body>
+</html>
